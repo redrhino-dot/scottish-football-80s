@@ -192,7 +192,7 @@
         </header>
 
         <div class="info-box">
-            💡 <strong>Click club names in the legend to toggle their lines on/off. Hover over the chart to see exact positions.</strong>
+            💡 <strong>Click club names to toggle lines on/off. Hover over data points to see detailed stats: W/D/L records, points, deficit to leader, and top scorer info.</strong>
         </div>
 
         <div class="controls">
@@ -210,6 +210,19 @@
     </div>
 
     <script>
+        const detailedData = {
+            "1980-81": { "leagueWinner": "Celtic", "leaguePoints": 56, "leagueTopScorer": "Frank McGarvey (Celtic)", "leagueTopGoals": 23, "Celtic": { "w": 26, "d": 4, "l": 6, "pts": 56, "deficit": 0 }, "Aberdeen": { "w": 19, "d": 11, "l": 6, "pts": 49, "deficit": -7 }, "Rangers": { "w": 16, "d": 12, "l": 8, "pts": 44, "deficit": -12 }, "St Mirren": { "w": 18, "d": 8, "l": 10, "pts": 44, "deficit": -12 }, "Dundee United": { "w": 17, "d": 9, "l": 10, "pts": 43, "deficit": -13 }, "Partick Thistle": { "w": 10, "d": 10, "l": 16, "pts": 30, "deficit": -26 }, "Airdrieonians": { "w": 10, "d": 9, "l": 17, "pts": 29, "deficit": -27 }, "Morton": { "w": 10, "d": 8, "l": 18, "pts": 28, "deficit": -28 }, "Kilmarnock": { "w": 5, "d": 9, "l": 22, "pts": 19, "deficit": -37 }, "Heart of Midlothian": { "w": 6, "d": 6, "l": 24, "pts": 18, "deficit": -38 } },
+            "1981-82": { "leagueWinner": "Celtic", "leaguePoints": 55, "leagueTopScorer": "George McCluskey (Celtic)", "leagueTopGoals": 21, "Celtic": { "w": 24, "d": 7, "l": 5, "pts": 55, "deficit": 0 }, "Aberdeen": { "w": 23, "d": 7, "l": 6, "pts": 53, "deficit": -2 }, "Rangers": { "w": 16, "d": 11, "l": 9, "pts": 43, "deficit": -12 }, "Dundee United": { "w": 15, "d": 10, "l": 11, "pts": 40, "deficit": -15 }, "St Mirren": { "w": 14, "d": 9, "l": 13, "pts": 37, "deficit": -18 }, "Hibernian": { "w": 11, "d": 14, "l": 11, "pts": 36, "deficit": -19 }, "Morton": { "w": 9, "d": 12, "l": 15, "pts": 30, "deficit": -25 }, "Dundee": { "w": 11, "d": 4, "l": 21, "pts": 26, "deficit": -29 }, "Partick Thistle": { "w": 6, "d": 10, "l": 20, "pts": 22, "deficit": -33 }, "Airdrieonians": { "w": 5, "d": 8, "l": 23, "pts": 18, "deficit": -37 } },
+            "1982-83": { "leagueWinner": "Dundee United", "leaguePoints": 56, "leagueTopScorer": "Charlie Nicholas (Celtic)", "leagueTopGoals": 29, "Dundee United": { "w": 24, "d": 8, "l": 4, "pts": 56, "deficit": 0 }, "Celtic": { "w": 25, "d": 5, "l": 6, "pts": 55, "deficit": -1 }, "Aberdeen": { "w": 25, "d": 5, "l": 6, "pts": 55, "deficit": -1 }, "Rangers": { "w": 13, "d": 12, "l": 11, "pts": 38, "deficit": -18 }, "St Mirren": { "w": 11, "d": 12, "l": 13, "pts": 34, "deficit": -22 }, "Hibernian": { "w": 7, "d": 15, "l": 14, "pts": 29, "deficit": -27 }, "Dundee": { "w": 9, "d": 11, "l": 16, "pts": 29, "deficit": -27 }, "Airdrieonians": { "w": 6, "d": 8, "l": 22, "pts": 20, "deficit": -36 }, "Morton": { "w": 6, "d": 8, "l": 22, "pts": 20, "deficit": -36 }, "Kilmarnock": { "w": 3, "d": 11, "l": 22, "pts": 17, "deficit": -39 } },
+            "1983-84": { "leagueWinner": "Aberdeen", "leaguePoints": 57, "leagueTopScorer": "Brian McClair (Celtic)", "leagueTopGoals": 23, "Aberdeen": { "w": 25, "d": 7, "l": 4, "pts": 57, "deficit": 0 }, "Celtic": { "w": 21, "d": 8, "l": 7, "pts": 50, "deficit": -7 }, "Dundee United": { "w": 18, "d": 11, "l": 7, "pts": 47, "deficit": -10 }, "Rangers": { "w": 15, "d": 12, "l": 9, "pts": 42, "deficit": -15 }, "Heart of Midlothian": { "w": 10, "d": 16, "l": 10, "pts": 36, "deficit": -21 }, "St Mirren": { "w": 9, "d": 14, "l": 13, "pts": 32, "deficit": -25 }, "Hibernian": { "w": 12, "d": 7, "l": 17, "pts": 31, "deficit": -26 }, "Dundee": { "w": 11, "d": 5, "l": 20, "pts": 27, "deficit": -30 }, "St Johnstone": { "w": 10, "d": 3, "l": 23, "pts": 23, "deficit": -34 }, "Motherwell": { "w": 4, "d": 7, "l": 25, "pts": 15, "deficit": -42 } },
+            "1984-85": { "leagueWinner": "Aberdeen", "leaguePoints": 59, "leagueTopScorer": "Frank McDougall (Aberdeen)", "leagueTopGoals": 23, "Aberdeen": { "w": 27, "d": 5, "l": 4, "pts": 59, "deficit": 0 }, "Celtic": { "w": 22, "d": 8, "l": 6, "pts": 52, "deficit": -7 }, "Dundee United": { "w": 20, "d": 7, "l": 9, "pts": 47, "deficit": -12 }, "Rangers": { "w": 13, "d": 12, "l": 11, "pts": 38, "deficit": -21 }, "St Mirren": { "w": 17, "d": 4, "l": 15, "pts": 38, "deficit": -21 }, "Dundee": { "w": 15, "d": 7, "l": 14, "pts": 37, "deficit": -22 }, "Heart of Midlothian": { "w": 13, "d": 5, "l": 18, "pts": 31, "deficit": -28 }, "Hibernian": { "w": 10, "d": 7, "l": 19, "pts": 27, "deficit": -32 }, "Dumbarton": { "w": 6, "d": 7, "l": 23, "pts": 19, "deficit": -40 }, "Morton": { "w": 5, "d": 2, "l": 29, "pts": 12, "deficit": -47 } },
+            "1985-86": { "leagueWinner": "Celtic", "leaguePoints": 50, "leagueTopScorer": "Ally McCoist (Rangers)", "leagueTopGoals": 24, "Celtic": { "w": 20, "d": 10, "l": 6, "pts": 50, "deficit": 0 }, "Heart of Midlothian": { "w": 20, "d": 10, "l": 6, "pts": 50, "deficit": 0 }, "Dundee United": { "w": 18, "d": 11, "l": 7, "pts": 47, "deficit": -3 }, "Aberdeen": { "w": 16, "d": 12, "l": 8, "pts": 44, "deficit": -6 }, "Rangers": { "w": 13, "d": 9, "l": 14, "pts": 35, "deficit": -15 }, "Dundee": { "w": 14, "d": 7, "l": 15, "pts": 35, "deficit": -15 }, "St Mirren": { "w": 13, "d": 5, "l": 18, "pts": 31, "deficit": -19 }, "Hibernian": { "w": 11, "d": 6, "l": 19, "pts": 28, "deficit": -22 }, "Motherwell": { "w": 7, "d": 6, "l": 23, "pts": 20, "deficit": -30 }, "Clydebank": { "w": 6, "d": 8, "l": 22, "pts": 20, "deficit": -30 } },
+            "1986-87": { "leagueWinner": "Rangers", "leaguePoints": 69, "leagueTopScorer": "Brian McClair (Celtic)", "leagueTopGoals": 35, "Rangers": { "w": 31, "d": 7, "l": 6, "pts": 69, "deficit": 0 }, "Celtic": { "w": 27, "d": 9, "l": 8, "pts": 63, "deficit": -6 }, "Dundee United": { "w": 24, "d": 12, "l": 8, "pts": 60, "deficit": -9 }, "Aberdeen": { "w": 21, "d": 16, "l": 7, "pts": 58, "deficit": -11 }, "Heart of Midlothian": { "w": 21, "d": 14, "l": 9, "pts": 56, "deficit": -13 }, "Dundee": { "w": 18, "d": 12, "l": 14, "pts": 48, "deficit": -21 }, "St Mirren": { "w": 12, "d": 12, "l": 20, "pts": 36, "deficit": -33 }, "Motherwell": { "w": 11, "d": 12, "l": 21, "pts": 34, "deficit": -35 }, "Hibernian": { "w": 10, "d": 13, "l": 21, "pts": 33, "deficit": -36 }, "Falkirk": { "w": 8, "d": 10, "l": 26, "pts": 26, "deficit": -43 }, "Clydebank": { "w": 6, "d": 12, "l": 26, "pts": 24, "deficit": -45 }, "Hamilton Academical": { "w": 6, "d": 9, "l": 29, "pts": 21, "deficit": -48 } },
+            "1987-88": { "leagueWinner": "Celtic", "leaguePoints": 72, "leagueTopScorer": "Tommy Coyne (Motherwell)", "leagueTopGoals": 33, "Celtic": { "w": 31, "d": 10, "l": 3, "pts": 72, "deficit": 0 }, "Heart of Midlothian": { "w": 23, "d": 16, "l": 5, "pts": 62, "deficit": -10 }, "Rangers": { "w": 26, "d": 8, "l": 10, "pts": 60, "deficit": -12 }, "Aberdeen": { "w": 21, "d": 17, "l": 6, "pts": 59, "deficit": -13 }, "Dundee United": { "w": 16, "d": 15, "l": 13, "pts": 47, "deficit": -25 }, "Hibernian": { "w": 12, "d": 19, "l": 13, "pts": 43, "deficit": -29 }, "Dundee": { "w": 17, "d": 7, "l": 20, "pts": 41, "deficit": -31 }, "Motherwell": { "w": 13, "d": 10, "l": 21, "pts": 36, "deficit": -36 }, "St Mirren": { "w": 10, "d": 15, "l": 19, "pts": 35, "deficit": -37 }, "Falkirk": { "w": 10, "d": 11, "l": 23, "pts": 31, "deficit": -41 }, "Dunfermline Athletic": { "w": 8, "d": 10, "l": 26, "pts": 26, "deficit": -46 }, "Morton": { "w": 3, "d": 10, "l": 31, "pts": 16, "deficit": -56 } },
+            "1988-89": { "leagueWinner": "Rangers", "leaguePoints": 56, "leagueTopScorer": "Mark McGhee / Charlie Nicholas (shared)", "leagueTopGoals": 16, "Rangers": { "w": 26, "d": 4, "l": 6, "pts": 56, "deficit": 0 }, "Aberdeen": { "w": 18, "d": 14, "l": 4, "pts": 50, "deficit": -6 }, "Celtic": { "w": 21, "d": 4, "l": 11, "pts": 46, "deficit": -10 }, "Dundee United": { "w": 16, "d": 12, "l": 8, "pts": 44, "deficit": -12 }, "Hibernian": { "w": 13, "d": 9, "l": 14, "pts": 35, "deficit": -21 }, "Heart of Midlothian": { "w": 9, "d": 13, "l": 14, "pts": 31, "deficit": -25 }, "St Mirren": { "w": 11, "d": 7, "l": 18, "pts": 29, "deficit": -27 }, "Dundee": { "w": 9, "d": 10, "l": 17, "pts": 28, "deficit": -28 }, "Motherwell": { "w": 7, "d": 13, "l": 16, "pts": 27, "deficit": -29 }, "Hamilton Academical": { "w": 6, "d": 2, "l": 28, "pts": 14, "deficit": -42 } },
+            "1989-90": { "leagueWinner": "Rangers", "leaguePoints": 51, "leagueTopScorer": "John Robertson (Hearts)", "leagueTopGoals": 17, "Rangers": { "w": 20, "d": 11, "l": 5, "pts": 51, "deficit": 0 }, "Aberdeen": { "w": 17, "d": 10, "l": 9, "pts": 44, "deficit": -7 }, "Heart of Midlothian": { "w": 16, "d": 12, "l": 8, "pts": 44, "deficit": -7 }, "Dundee United": { "w": 11, "d": 13, "l": 12, "pts": 35, "deficit": -16 }, "Celtic": { "w": 10, "d": 14, "l": 12, "pts": 34, "deficit": -17 }, "Motherwell": { "w": 11, "d": 12, "l": 13, "pts": 34, "deficit": -17 }, "Hibernian": { "w": 12, "d": 10, "l": 14, "pts": 34, "deficit": -17 }, "Dunfermline Athletic": { "w": 11, "d": 8, "l": 17, "pts": 30, "deficit": -21 }, "St Mirren": { "w": 10, "d": 10, "l": 16, "pts": 30, "deficit": -21 }, "Dundee": { "w": 5, "d": 14, "l": 17, "pts": 24, "deficit": -27 } }
+        };
+
         const data = {
             seasons: ["1980-81", "1981-82", "1982-83", "1983-84", "1984-85", "1985-86", "1986-87", "1987-88", "1988-89", "1989-90"],
             clubs: {
@@ -345,12 +358,45 @@
                         display: false
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        padding: 12,
+                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                        padding: 14,
                         titleFont: { size: 14, weight: 'bold' },
-                        bodyFont: { size: 13 },
+                        bodyFont: { size: 12 },
                         borderColor: '#FF8200',
-                        borderWidth: 1
+                        borderWidth: 2,
+                        displayColors: false,
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                return tooltipItems[0].label;
+                            },
+                            label: function(context) {
+                                const season = context.label;
+                                const club = context.dataset.label;
+                                const position = context.parsed.y;
+                                const seasonData = detailedData[season];
+                                
+                                if (!seasonData || !seasonData[club]) {
+                                    return club + ' - Position: ' + position;
+                                }
+                                
+                                const clubStats = seasonData[club];
+                                const lines = [];
+                                lines.push('Position: ' + position);
+                                lines.push('Record: ' + clubStats.w + 'W-' + clubStats.d + 'D-' + clubStats.l + 'L');
+                                lines.push('Points: ' + clubStats.pts + ' (' + clubStats.deficit + ' to leader)');
+                                
+                                return lines;
+                            },
+                            afterLabel: function(context) {
+                                const season = context.label;
+                                const seasonData = detailedData[season];
+                                
+                                if (seasonData) {
+                                    return 'Top Scorer: ' + seasonData.leagueTopScorer + ' (' + seasonData.leagueTopGoals + ' goals)';
+                                }
+                                return '';
+                            }
+                        }
                     }
                 },
                 scales: {
