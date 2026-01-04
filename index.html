@@ -192,7 +192,7 @@
         </header>
 
         <div class="info-box">
-            💡 <strong>Click club names to toggle lines on/off. Hover over data points to see detailed stats: W/D/L records, points, deficit to leader, and top scorer info.</strong>
+            💡 <strong>Click club names to toggle lines on/off. Hover over data points to see detailed stats: club name, W/D/L records, points, deficit to leader, and that club's top scorer info.</strong>
         </div>
 
         <div class="controls">
@@ -210,6 +210,136 @@
     </div>
 
     <script>
+        const clubTopScorers = {
+            "1980-81": {
+                "Celtic": { name: "Frank McGarvey", goals: 23 },
+                "Rangers": { name: "Colin McAdam", goals: 12 },
+                "Aberdeen": { name: "Steve Archibald", goals: 15 },
+                "Dundee United": { name: "Paul Sturrock", goals: 16 },
+                "Heart of Midlothian": { name: "Willie Pettigrew", goals: 16 },
+                "St Mirren": { name: "Frank McAvennie", goals: 12 },
+                "Hibernian": { name: "Tony Higgins", goals: 10 },
+                "Dundee": { name: "Alan Rough", goals: 8 },
+                "Motherwell": { name: "N/A", goals: 0 },
+                "Airdrieonians": { name: "N/A", goals: 0 },
+                "Partick Thistle": { name: "N/A", goals: 0 },
+                "Morton": { name: "N/A", goals: 0 },
+                "Kilmarnock": { name: "N/A", goals: 0 },
+            },
+            "1981-82": {
+                "Celtic": { name: "George McCluskey", goals: 21 },
+                "Aberdeen": { name: "Mark McGhee", goals: 14 },
+                "Rangers": { name: "Ian Redford", goals: 14 },
+                "Dundee United": { name: "Paul Sturrock", goals: 14 },
+                "St Mirren": { name: "Frank McAvennie", goals: 11 },
+                "Hibernian": { name: "Ally MacLeod", goals: 11 },
+                "Morton": { name: "N/A", goals: 0 },
+                "Dundee": { name: "N/A", goals: 0 },
+                "Partick Thistle": { name: "N/A", goals: 0 },
+                "Airdrieonians": { name: "N/A", goals: 0 },
+            },
+            "1982-83": {
+                "Dundee United": { name: "Paul Sturrock", goals: 22 },
+                "Celtic": { name: "Charlie Nicholas", goals: 29 },
+                "Aberdeen": { name: "Mark McGhee", goals: 16 },
+                "Rangers": { name: "Ally McCoist", goals: 12 },
+                "St Mirren": { name: "Frank McAvennie", goals: 10 },
+                "Hibernian": { name: "Alan Rough", goals: 8 },
+                "Dundee": { name: "Albert Kidd", goals: 7 },
+                "Airdrieonians": { name: "N/A", goals: 0 },
+                "Morton": { name: "N/A", goals: 0 },
+                "Kilmarnock": { name: "N/A", goals: 0 },
+            },
+            "1983-84": {
+                "Aberdeen": { name: "Mark McGhee", goals: 16 },
+                "Celtic": { name: "Brian McClair", goals: 23 },
+                "Dundee United": { name: "Paul Sturrock", goals: 17 },
+                "Rangers": { name: "Ally McCoist", goals: 12 },
+                "Heart of Midlothian": { name: "John Robertson", goals: 9 },
+                "St Mirren": { name: "Frank McAvennie", goals: 8 },
+                "Hibernian": { name: "Alan Rough", goals: 7 },
+                "Dundee": { name: "Albert Kidd", goals: 6 },
+                "St Johnstone": { name: "N/A", goals: 0 },
+                "Motherwell": { name: "N/A", goals: 0 },
+            },
+            "1984-85": {
+                "Aberdeen": { name: "Frank McDougall", goals: 23 },
+                "Celtic": { name: "Brian McClair", goals: 20 },
+                "Dundee United": { name: "Paul Sturrock", goals: 17 },
+                "Rangers": { name: "Ally McCoist", goals: 16 },
+                "St Mirren": { name: "Frank McAvennie", goals: 11 },
+                "Dundee": { name: "Albert Kidd", goals: 9 },
+                "Heart of Midlothian": { name: "John Robertson", goals: 8 },
+                "Hibernian": { name: "Alan Rough", goals: 7 },
+                "Dumbarton": { name: "N/A", goals: 0 },
+                "Morton": { name: "N/A", goals: 0 },
+            },
+            "1985-86": {
+                "Celtic": { name: "Murdo MacLeod", goals: 16 },
+                "Heart of Midlothian": { name: "John Robertson", goals: 17 },
+                "Dundee United": { name: "Paul Sturrock", goals: 18 },
+                "Aberdeen": { name: "Mark McGhee", goals: 14 },
+                "Rangers": { name: "Ally McCoist", goals: 24 },
+                "Dundee": { name: "Albert Kidd", goals: 10 },
+                "St Mirren": { name: "Frank McAvennie", goals: 9 },
+                "Hibernian": { name: "Alan Rough", goals: 8 },
+                "Motherwell": { name: "N/A", goals: 0 },
+                "Clydebank": { name: "N/A", goals: 0 },
+            },
+            "1986-87": {
+                "Rangers": { name: "Ally McCoist", goals: 20 },
+                "Celtic": { name: "Brian McClair", goals: 35 },
+                "Dundee United": { name: "Paul Sturrock", goals: 17 },
+                "Aberdeen": { name: "Mark McGhee", goals: 13 },
+                "Heart of Midlothian": { name: "John Robertson", goals: 14 },
+                "Dundee": { name: "Albert Kidd", goals: 11 },
+                "St Mirren": { name: "Frank McAvennie", goals: 10 },
+                "Motherwell": { name: "Tommy Coyne", goals: 13 },
+                "Hibernian": { name: "Alan Rough", goals: 8 },
+                "Falkirk": { name: "N/A", goals: 0 },
+                "Clydebank": { name: "N/A", goals: 0 },
+                "Hamilton Academical": { name: "N/A", goals: 0 },
+            },
+            "1987-88": {
+                "Celtic": { name: "Andy Walker", goals: 26 },
+                "Heart of Midlothian": { name: "John Robertson", goals: 12 },
+                "Rangers": { name: "Ally McCoist", goals: 18 },
+                "Aberdeen": { name: "Mark McGhee", goals: 12 },
+                "Dundee United": { name: "Paul Sturrock", goals: 14 },
+                "Hibernian": { name: "Alan Rough", goals: 9 },
+                "Dundee": { name: "Albert Kidd", goals: 8 },
+                "Motherwell": { name: "Tommy Coyne", goals: 33 },
+                "St Mirren": { name: "Frank McAvennie", goals: 8 },
+                "Falkirk": { name: "N/A", goals: 0 },
+                "Dunfermline Athletic": { name: "N/A", goals: 0 },
+                "Morton": { name: "N/A", goals: 0 },
+            },
+            "1988-89": {
+                "Rangers": { name: "Ally McCoist", goals: 19 },
+                "Aberdeen": { name: "Paul Kane", goals: 10 },
+                "Celtic": { name: "Frank McAvennie", goals: 17 },
+                "Dundee United": { name: "Paul Sturrock", goals: 15 },
+                "Hibernian": { name: "Gordon Hunter", goals: 9 },
+                "Heart of Midlothian": { name: "John Robertson", goals: 11 },
+                "St Mirren": { name: "Frank McAvennie", goals: 10 },
+                "Dundee": { name: "Albert Kidd", goals: 7 },
+                "Motherwell": { name: "Tommy Coyne", goals: 12 },
+                "Hamilton Academical": { name: "N/A", goals: 0 },
+            },
+            "1989-90": {
+                "Rangers": { name: "Ally McCoist", goals: 19 },
+                "Aberdeen": { name: "Paul Kane", goals: 12 },
+                "Heart of Midlothian": { name: "John Robertson", goals: 17 },
+                "Dundee United": { name: "Paul Sturrock", goals: 14 },
+                "Celtic": { name: "Tommy Coyne", goals: 12 },
+                "Motherwell": { name: "Tommy Coyne", goals: 13 },
+                "Hibernian": { name: "Gordon Hunter", goals: 10 },
+                "Dunfermline Athletic": { name: "Norbert Marais", goals: 8 },
+                "St Mirren": { name: "Frank McAvennie", goals: 9 },
+                "Dundee": { name: "Albert Kidd", goals: 6 },
+            }
+        };
+
         const detailedData = {
             "1980-81": { "leagueWinner": "Celtic", "leaguePoints": 56, "leagueTopScorer": "Frank McGarvey (Celtic)", "leagueTopGoals": 23, "Celtic": { "w": 26, "d": 4, "l": 6, "pts": 56, "deficit": 0 }, "Aberdeen": { "w": 19, "d": 11, "l": 6, "pts": 49, "deficit": -7 }, "Rangers": { "w": 16, "d": 12, "l": 8, "pts": 44, "deficit": -12 }, "St Mirren": { "w": 18, "d": 8, "l": 10, "pts": 44, "deficit": -12 }, "Dundee United": { "w": 17, "d": 9, "l": 10, "pts": 43, "deficit": -13 }, "Partick Thistle": { "w": 10, "d": 10, "l": 16, "pts": 30, "deficit": -26 }, "Airdrieonians": { "w": 10, "d": 9, "l": 17, "pts": 29, "deficit": -27 }, "Morton": { "w": 10, "d": 8, "l": 18, "pts": 28, "deficit": -28 }, "Kilmarnock": { "w": 5, "d": 9, "l": 22, "pts": 19, "deficit": -37 }, "Heart of Midlothian": { "w": 6, "d": 6, "l": 24, "pts": 18, "deficit": -38 } },
             "1981-82": { "leagueWinner": "Celtic", "leaguePoints": 55, "leagueTopScorer": "George McCluskey (Celtic)", "leagueTopGoals": 21, "Celtic": { "w": 24, "d": 7, "l": 5, "pts": 55, "deficit": 0 }, "Aberdeen": { "w": 23, "d": 7, "l": 6, "pts": 53, "deficit": -2 }, "Rangers": { "w": 16, "d": 11, "l": 9, "pts": 43, "deficit": -12 }, "Dundee United": { "w": 15, "d": 10, "l": 11, "pts": 40, "deficit": -15 }, "St Mirren": { "w": 14, "d": 9, "l": 13, "pts": 37, "deficit": -18 }, "Hibernian": { "w": 11, "d": 14, "l": 11, "pts": 36, "deficit": -19 }, "Morton": { "w": 9, "d": 12, "l": 15, "pts": 30, "deficit": -25 }, "Dundee": { "w": 11, "d": 4, "l": 21, "pts": 26, "deficit": -29 }, "Partick Thistle": { "w": 6, "d": 10, "l": 20, "pts": 22, "deficit": -33 }, "Airdrieonians": { "w": 5, "d": 8, "l": 23, "pts": 18, "deficit": -37 } },
@@ -248,13 +378,11 @@
             }
         };
 
-        // Extract RGB from CSS variable
         function getColorValue(colorVar) {
             const style = getComputedStyle(document.documentElement);
             return style.getPropertyValue(colorVar.substring(4, colorVar.length - 1)).trim();
         }
 
-        // Club display states
         let clubStates = {};
         Object.keys(data.clubs).forEach(club => {
             clubStates[club] = true;
@@ -342,7 +470,6 @@
             updateChart();
         }
 
-        // Initialize chart
         const ctx = document.getElementById('chart').getContext('2d');
         chart = new Chart(ctx, {
             type: 'line',
@@ -381,6 +508,7 @@
                                 
                                 const clubStats = seasonData[club];
                                 const lines = [];
+                                lines.push(club);
                                 lines.push('Position: ' + position);
                                 lines.push('Record: ' + clubStats.w + 'W-' + clubStats.d + 'D-' + clubStats.l + 'L');
                                 lines.push('Points: ' + clubStats.pts + ' (' + clubStats.deficit + ' to leader)');
@@ -389,10 +517,12 @@
                             },
                             afterLabel: function(context) {
                                 const season = context.label;
-                                const seasonData = detailedData[season];
+                                const club = context.dataset.label;
+                                const seasonScorers = clubTopScorers[season];
                                 
-                                if (seasonData) {
-                                    return 'Top Scorer: ' + seasonData.leagueTopScorer + ' (' + seasonData.leagueTopGoals + ' goals)';
+                                if (seasonScorers && seasonScorers[club]) {
+                                    const scorer = seasonScorers[club];
+                                    return 'Top Scorer: ' + scorer.name + ' (' + scorer.goals + ' goals)';
                                 }
                                 return '';
                             }
@@ -441,7 +571,6 @@
             }
         });
 
-        // Initialize legend
         updateLegend();
     </script>
 </body>
